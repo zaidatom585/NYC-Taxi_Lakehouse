@@ -1,0 +1,8 @@
+table_name,row_count
+bronze_trips,21932
+silver_trips,21814
+gold_hourly_demand,48
+gold_daily_summary,60
+gold_zip_summary,47
+gold_top_routes,253
+gold_distance_buckets,5

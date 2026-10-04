@@ -1,0 +1,2 @@
+input_rows,rows_removed,pct_removed,missing_values,non_positive_distance,non_positive_fare,dropoff_not_after_pickup,duration_over_3_hours,distance_over_100_miles
+21932,118,0.54,0,76,10,1,33,0

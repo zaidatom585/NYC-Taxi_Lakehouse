@@ -1,0 +1,47 @@
+# This is a Declarative Automation Bundle definition for nyc-taxi-lakehouse.
+# The Databricks extension requires databricks.yml configuration file.
+# See https://docs.databricks.com/dev-tools/bundles/index.html for documentation.
+
+bundle:
+  name: nyc-taxi-lakehouse
+
+targets:
+  dev:
+    mode: development
+    default: true
+    workspace:
+      host: https://dbc-0d9c6991-c514.cloud.databricks.com
+
+  ## Optionally, there could be 'staging' or 'prod' targets here.
+  #
+  # prod:
+  #   workspace:
+  #     host: https://dbc-0d9c6991-c514.cloud.databricks.com
+resources:
+  jobs:
+    nyc_taxi_pipeline:
+      name: nyc_taxi_pipeline
+      tasks:
+        - task_key: setup
+          notebook_task:
+            notebook_path: ./notebooks/00_setup.py
+        - task_key: bronze
+          depends_on:
+            - task_key: setup
+          notebook_task:
+            notebook_path: ./notebooks/01_bronze.py
+        - task_key: silver
+          depends_on:
+            - task_key: bronze
+          notebook_task:
+            notebook_path: ./notebooks/02_silver.py
+        - task_key: gold
+          depends_on:
+            - task_key: silver
+          notebook_task:
+            notebook_path: ./notebooks/03_gold.py
+        - task_key: quality_checks
+          depends_on:
+            - task_key: gold
+          notebook_task:
+            notebook_path: ./notebooks/04_quality_checks.py
